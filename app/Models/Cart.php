@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cart extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'carts';
 
@@ -23,6 +23,11 @@ class Cart extends Model
     public function products()
     {
         return $this->hasMany('App\Models\OrderProduct', 'order_id');
+    }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 
     public function totalprice()
