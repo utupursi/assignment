@@ -22,11 +22,16 @@ use Illuminate\Support\Facades\Route;
 //    Route::post('delete-access-token',[\App\Http\Controllers\AccessTokenController::class,'delete']);
 //});
 
-Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'getArticle']);
-Route::get('/articles/{id}/comments', [\App\Http\Controllers\ArticleController::class, 'getArticleComments']);
-Route::get('/tags', [\App\Http\Controllers\TagController::class, 'getTags']);
-Route::get('/tags/{id}/articles', [\App\Http\Controllers\TagController::class, 'getTagArticles']);
 
-Route::post('/create-product',[\App\Http\Controllers\ProductController::class,'addProduct']);
-Route::delete('/delete-product',[\App\Http\Controllers\ProductController::class,'deleteProduct']);
+Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/create-product', [\App\Http\Controllers\ProductController::class, 'addProduct']);
+    Route::delete('/delete-product', [\App\Http\Controllers\ProductController::class, 'deleteProduct']);
+    Route::post('/add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart']);
+    Route::delete('/delete-from-cart', [\App\Http\Controllers\CartController::class, 'deleteFromCart']);
+
+});
+
 
