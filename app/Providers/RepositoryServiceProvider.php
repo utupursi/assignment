@@ -10,8 +10,10 @@ use App\Repositories\Eloquent\AuthRepository;
 use App\Repositories\Eloquent\Base\BaseRepository;
 use App\Repositories\Eloquent\Base\EloquentRepositoryInterface;
 use App\Repositories\Eloquent\CartRepository;
+use App\Repositories\Eloquent\OrderRepository;
 use App\Repositories\Eloquent\ProductRepository;
 use App\Repositories\Eloquent\TagRepository;
+use App\Repositories\OrderRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\TagRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -44,6 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
         $this->app->bind(AuthRepositoryInterface::class, AuthRepository::class);
+        $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
     }
 
 }
