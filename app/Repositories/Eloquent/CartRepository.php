@@ -32,6 +32,10 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         if (auth('sanctum')->user()) {
             $attributes['user_id'] = auth('sanctum')->user()->id;
             $cart = $this->model->where(['user_id' => $attributes['user_id'], 'product_id' => $attributes['product_id']])->first();
+
+            if ($cart && $product->quantity <= $cart->quantity) {
+                return ['message' => 'Too many product quantity', 'code' => 400];
+            }
         }
 
         if ($product->quantity < $attributes['quantity']) {
