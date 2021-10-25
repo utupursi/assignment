@@ -78,7 +78,7 @@ class OrderController extends Controller
         $rules = [
             'product_id' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'total_price' => 'required|numeric|max:1000000',
+            'total_price' => 'required|numeric|max:1000000|gt:0',
         ];
 
         return $rules;
