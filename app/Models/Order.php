@@ -18,10 +18,11 @@ class Order extends Model
         'payment_method',
     ];
 
-    public function products()
+    public function orderProducts()
     {
         return $this->hasMany('App\Models\OrderProduct', 'order_id');
     }
+
 
     public function totalprice()
     {

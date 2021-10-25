@@ -26,12 +26,13 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 
+Route::post('/add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/create-product', [\App\Http\Controllers\ProductController::class, 'addProduct']);
     Route::delete('/delete-product', [\App\Http\Controllers\ProductController::class, 'deleteProduct']);
-    Route::post('/add-to-cart', [\App\Http\Controllers\CartController::class, 'addToCart']);
     Route::delete('/delete-from-cart', [\App\Http\Controllers\CartController::class, 'deleteFromCart']);
-    Route::delete('/add-order', [\App\Http\Controllers\OrderController::class, 'makeOrder']);
+    Route::post('/add-order', [\App\Http\Controllers\OrderController::class, 'makeOrder']);
 
 });
 

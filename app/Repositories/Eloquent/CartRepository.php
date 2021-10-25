@@ -9,6 +9,7 @@ use App\Repositories\CartRepositoryInterface;
 use App\Repositories\Eloquent\Base\BaseRepository;
 use App\Repositories\ProductRepositoryInterface;
 use http\Env\Response;
+use Illuminate\Support\Facades\Session;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
@@ -28,12 +29,17 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
             return ['message' => 'Product was not found', 'code' => 400];
         }
 
-        $attributes['user_id'] = auth('sanctum')->user()->id;
-        $cart = $this->model->where(['user_id' => $attributes['user_id'], 'product_id' => $attributes['product_id']])->first();
+        if (auth('sanctum')->user()) {
+            $attributes['user_id'] = auth('sanctum')->user()->id;
+            $cart = $this->model->where(['user_id' => $attributes['user_id'], 'product_id' => $attributes['product_id']])->first();
+        }
 
+        if ($product->quantity < $attributes['quantity']) {
+            return ['message' => 'Too many product quantity', 'code' => 400];
+        }
 
         try {
-            if ($cart) {
+            if (auth('sanctum')->user() && $cart) {
                 $attributes['quantity'] += $cart->quantity;
                 $cart->update($attributes);
                 return $this->model->withTrashed()->find($cart->id);

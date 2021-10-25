@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Request\CartRequest;
 use App\Http\Request\ProductRequest;
 use App\Http\Resources\CartResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Repositories\CartRepositoryInterface;
 use App\Repositories\OrderRepositoryInterface;
@@ -84,8 +86,8 @@ class OrderController extends Controller
 
     public function response($data)
     {
-        if ($data instanceof Cart) {
-            return new CartResource($data);
+        if ($data instanceof Order) {
+            return new OrderResource($data);
         }
         return response()->json(['success' => 'false', 'message' => $data['message']], $data['code']);
     }
