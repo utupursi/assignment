@@ -92,7 +92,7 @@ class UserTest extends TestCase
 
         $response = $this->postJson('/api/add-to-cart', [
             "product_id" => $product->id,
-            "quantity" => 2,
+            "quantity" => 1,
             "total_price" => 200000
         ], ['Authorization' => 'Bearer 9|W5ct55wXelR3HpIQGYaAtg9JR8l7lFyrFggCvgLD']);
 
@@ -107,7 +107,7 @@ class UserTest extends TestCase
 
         $response = $this->postJson('/api/add-to-cart', [
             "product_id" => $product->id,
-            "quantity" => 2,
+            "quantity" => 1,
             "total_price" => 200000
         ], ['Authorization' => 'Bearer 9|W5ct55wXelR3HpIQGYaAtg9JR8l7lFyrFggCvgLD']);
 
