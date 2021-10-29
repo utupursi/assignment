@@ -31,36 +31,4 @@ class Product extends Model
         'price',
         'quantity'
     ];
-
-
-//    public function comment()
-//    {
-//        return $this->hasMany(ArticleComment::class, 'article_id');
-//    }
-//
-//    public function comments()
-//    {
-//        return $this->hasManyThrough(
-//            Comment::class,
-//            ArticleComment::class,
-//            'article_id',
-//            'id',
-//            'id',
-//            'comment_id'
-//        );
-//    }
-//
-//    public function tags()
-//    {
-//        return $this->hasManyThrough(
-//            Tag::class,
-//            ArticleTag::class,
-//            'article_id',
-//            'id',
-//            'id',
-//            'tag_id'
-//        );
-//    }
-
-
 }

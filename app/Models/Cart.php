@@ -30,42 +30,4 @@ class Cart extends Model
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
 
-    public function totalprice()
-    {
-        $total = 0;
-        foreach ($this->products as $item) {
-            $total += $item->quantity * $item->price;
-        }
-        return $total;
-    }
-
-    public function loan()
-    {
-        return $this->morphOne('App\Models\Loan', 'loanable');
-    }
-
-    public function tbcLoan(): MorphOne
-    {
-        return $this->morphOne(TbcLoan::class, 'tbcloanable');
-    }
-
-    public function bank()
-    {
-        return $this->hasOne(Bank::class, 'id', 'bank_id');
-    }
-
-    public function paymentType()
-    {
-        return $this->hasOne(PaymentType::class, 'id', 'payment_type_id');
-    }
-
-    /**
-     * Get the user's full name.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute()
-    {
-        return "{$this->first_name} {$this->last_name}";
-    }
 }
