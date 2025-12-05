@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Request\CartRequest;
 use App\Http\Request\ProductRequest;
 use App\Http\Resources\CartResource;
-use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Cart;
-use App\Models\Order;
 use App\Models\Product;
 use App\Repositories\CartRepositoryInterface;
-use App\Repositories\OrderRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
 use http\Client\Curl\User;
 use Illuminate\Http\JsonResponse;
@@ -19,22 +16,23 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
+use MongoDB\Driver\Session;
 
 
-class OrderController extends Controller
+class TestController extends Controller
 {
     /**
      * @var ProductRepositoryInterface
      */
-    protected $orderRepository;
+    protected $cartRepository;
 
     /**
      * productController constructor.
-     * @param OrderRepositoryInterface $orderRepository
+     * @param CartRepositoryInterface $cartRepository
      */
-    public function __construct(OrderRepositoryInterface $orderRepository)
+    public function __construct(CartRepositoryInterface $cartRepository)
     {
-        $this->orderRepository = $orderRepository;
+        $this->cartRepository = $cartRepository;
     }
 
 
@@ -42,17 +40,16 @@ class OrderController extends Controller
      * @param Request $request
      * @return CartResource|JsonResponse
      */
-    public function makeOrder(Request $request)
+    public function addToCart(Request $request)
     {
-        $validator = Validator::make($request->all(), ['products' => 'required|array', 'pay_method' => 'required|string|max:255']);
+        $rules = $this->validateCartParams();
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json(['success' => 'false', 'message' => $validator->messages()], 400);
         }
 
-        $user = \App\Models\User::find();
-
-        $cart = $this->orderRepository->create($request->all());
+        $cart = $this->cartRepository->create($request->all());
 
         return $this->response($cart);
     }
@@ -65,9 +62,10 @@ class OrderController extends Controller
             return response()->json(['success' => 'false', 'message' => $validator->messages()], 400);
         }
 
-        $cart = $this->cartRepository->deleteFromCart($request['product_id']);
+        Cart::find($request['product_id'])->delete();
+//        $cart = $this->cartRepository->deleteFromCart($request['product_id']);
 
-        return $this->response($cart);
+        return $this->response([]);
 
     }
 
@@ -88,8 +86,8 @@ class OrderController extends Controller
 
     public function response($data)
     {
-        if ($data instanceof Order) {
-            return new OrderResource($data);
+        if ($data instanceof Cart) {
+            return new CartResource($data);
         }
         return response()->json(['success' => 'false', 'message' => $data['message']], $data['code']);
     }
