@@ -50,6 +50,8 @@ class OrderController extends Controller
             return response()->json(['success' => 'false', 'message' => $validator->messages()], 400);
         }
 
+        $user = \App\Models\User::find();
+
         $cart = $this->orderRepository->create($request->all());
 
         return $this->response($cart);
