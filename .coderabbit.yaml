@@ -2,7 +2,7 @@
 
 path_instructions:
   # 1. Controller Layer Instructions
-  - path: "app/controllers/**"
+  - path: "app/Http/Controllers/**"
     instructions: |
       **Controller Review Policy:**
       1. Controllers must ONLY handle **HTTP requests/responses** (parsing request bodies, setting status codes).
@@ -11,7 +11,7 @@ path_instructions:
       4. Avoid injecting the Repository layer directly.
       5. Ensure proper error handling and status code mapping.
   # 2. Service Layer Instructions
-  - path: "app/services/**"
+  - path: "app/Services/**"
     instructions: |
       **Service Review Policy:**
       1. Services must contain all the **core business logic** (data transformation, complex validation, orchestrating tasks).
@@ -19,7 +19,7 @@ path_instructions:
       3. Services should be independent of HTTP context.
       4. Ensure transactions or atomic operations are properly managed here if required.
   # 3. Repository Layer Instructions
-  - path: "app/repositories/**"
+  - path: "app/Repositories/**"
     instructions: |
       **Repository Review Policy:**
       1. Repositories must ONLY handle **data access logic** (interacting with the database, ORM queries).
