@@ -62,15 +62,10 @@ class TestController extends Controller
             return response()->json(['success' => 'false', 'message' => $validator->messages()], 400);
         }
 
-        $result=233;
-        if(1==1){
-            $result='test';
-        }
+        Cart::find($request['product_id'])->delete();
+//        $cart = $this->cartRepository->deleteFromCart($request['product_id']);
 
-
-        $cart = $this->cartRepository->deleteFromCart($request['product_id']);
-
-        return $this->response($cart);
+        return $this->response([]);
 
     }
 
