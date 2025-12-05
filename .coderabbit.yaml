@@ -1,0 +1,30 @@
+# .coderabbit.yaml
+
+path_instructions:
+  # 1. Controller Layer Instructions
+  - path: "src/controllers/**"
+    instructions: |
+      **Controller Review Policy:**
+      1. Controllers must ONLY handle **HTTP requests/responses** (parsing request bodies, setting status codes).
+      2. Controllers **must NOT contain any business logic** (data manipulation, complex validation).
+      3. Controllers **must call methods in the corresponding Service layer** to execute tasks.
+      4. Avoid injecting the Repository layer directly.
+      5. Ensure proper error handling and status code mapping.
+
+  # 2. Service Layer Instructions
+  - path: "src/services/**"
+    instructions: |
+      **Service Review Policy:**
+      1. Services must contain all the **core business logic** (data transformation, complex validation, orchestrating tasks).
+      2. Services **must call methods in the Repository layer** for data access.
+      3. Services should be independent of HTTP context.
+      4. Ensure transactions or atomic operations are properly managed here if required.
+
+  # 3. Repository Layer Instructions
+  - path: "src/repositories/**"
+    instructions: |
+      **Repository Review Policy:**
+      1. Repositories must ONLY handle **data access logic** (interacting with the database, ORM queries).
+      2. Repositories **must NOT contain any business logic**.
+      3. Repositories should return raw data entities or domain objects, not DTOs or API-specific objects.
+      4. Ensure all database interactions are robust and efficient (e.g., proper indexing, avoiding N+1 queries).
